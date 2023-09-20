@@ -15,14 +15,16 @@ class MainActivity : AppCompatActivity() {
         textoPantalla = findViewById<EditText>(R.id.TextoPantalla)
         textoPantalla.isEnabled = false
         var HayComa = false
-        var NumAux:Float= 0F
-
+        var NumAux=""
+        
         var btnSumar  = findViewById<Button>(R.id.btnSumar)
         var btnRestar = findViewById<Button>(R.id.btnRestar)
         var btnMultiplicar = findViewById<Button>(R.id.btnMultiplicar)
         var btnDividir = findViewById<Button>(R.id.btnDividir)
+        var btnIgual = findViewById<Button>(R.id.btnIgual)
         var btnComa = findViewById<Button>(R.id.btnComa)
         var btnBorrar = findViewById<Button>(R.id.btnBorrar)
+        
         var btnCero= findViewById<Button>(R.id.btn0)
         var btnUno = findViewById<Button>(R.id.btn1)
         var btnDos = findViewById<Button>(R.id.btn2)
@@ -33,18 +35,22 @@ class MainActivity : AppCompatActivity() {
         var btnSiete = findViewById<Button>(R.id.btn7)
         var btnOcho = findViewById<Button>(R.id.btn8)
         var btnNueve = findViewById<Button>(R.id.btn9)
+        
         //Cálculos
         btnSumar.setOnClickListener{
-            textoPantalla.setText((NumAux+textoPantalla.text.toString().toFloat()).toString())
+            calcular("sumar")
         }
         btnRestar.setOnClickListener {
-
+            calcular("restar")
         }
         btnMultiplicar.setOnClickListener {
-
+            calcular("multiplicar")
         }
         btnDividir.setOnClickListener {
-
+            calcular("dividir")
+        }
+        btnIgual.setOnClickListener { 
+            calcular("igual")
         }
         btnComa.setOnClickListener {
             if(!HayComa){
@@ -54,7 +60,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         btnBorrar.setOnClickListener {
-
+            textoPantalla.setText("")
+            NumAux=""
         }
 
         //Añadir Números
@@ -68,6 +75,10 @@ class MainActivity : AppCompatActivity() {
         btnSiete.setOnClickListener { agregarNumero(7) }
         btnOcho.setOnClickListener { agregarNumero(8) }
         btnNueve.setOnClickListener { agregarNumero(9) }
+
+    }
+
+    private fun calcular(s: String) {
 
     }
 
