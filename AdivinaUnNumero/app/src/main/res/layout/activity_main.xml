@@ -7,10 +7,10 @@
     tools:context=".MainActivity">
 
     <CheckBox
-        android:id="@+id/checkBox2"
+        android:id="@+id/chkIntentos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CheckBox"
+        android:text="Intentos"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.679"
@@ -77,15 +77,26 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/chkPistas"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CheckBox"
+        android:text="Pistas"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.317"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.73" />
+
+    <Button
+        android:id="@+id/btnVolverAJugar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Volver a jugar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.862" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
