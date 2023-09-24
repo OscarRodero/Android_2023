@@ -11,14 +11,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        jugar()
-    }
-
-    private fun jugar() {
         var random = Random()
-        do {
-            var x = random.nextInt(100)
+        var x = random.nextInt(100)
+        var contadorIntentos = 0
+        binding.btnComprobar.setOnClickListener {
+            if(binding.txtNumero.text.toString().toInt() != x){
 
-        }while(true)
+            }else{
+                contadorIntentos++
+                if(binding.txtNumero.text.toString().toInt()>x){
+
+                }else{
+
+                }
+            }
+        }
     }
 }
