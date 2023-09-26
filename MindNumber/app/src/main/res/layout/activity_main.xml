@@ -6,20 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <CheckBox
-        android:id="@+id/chkIntentos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Intentos"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.679"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.73" />
-
     <TextView
-        android:id="@+id/textView2"
+        android:id="@+id/txtA"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Adivina el Número"
@@ -32,20 +20,21 @@
         app:layout_constraintVertical_bias="0.05" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Elige un número"
+        android:text="Elige un Número"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.122" />
+        app:layout_constraintVertical_bias="0.144" />
 
     <EditText
         android:id="@+id/txtNumero"
-        android:layout_width="218dp"
-        android:layout_height="67dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,7 +42,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.188" />
+        app:layout_constraintVertical_bias="0.249" />
 
     <Button
         android:id="@+id/btnComprobar"
@@ -64,16 +53,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.292" />
+        app:layout_constraintVertical_bias="0.385" />
 
     <ImageView
         android:id="@+id/imagen"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.552"
         tools:srcCompat="@tools:sample/avatars" />
 
     <CheckBox
@@ -86,17 +77,28 @@
         app:layout_constraintHorizontal_bias="0.317"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.73" />
+        app:layout_constraintVertical_bias="0.745" />
+
+    <CheckBox
+        android:id="@+id/chkIntentos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Intentos"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.679"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.745" />
 
     <Button
         android:id="@+id/btnVolverAJugar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Volver a jugar"
+        android:text="Volver a Jugar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.862" />
-
+        app:layout_constraintVertical_bias="0.857" />
 </androidx.constraintlayout.widget.ConstraintLayout>
