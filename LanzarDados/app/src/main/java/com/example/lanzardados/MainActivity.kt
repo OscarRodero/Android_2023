@@ -93,14 +93,18 @@ class MainActivity : AppCompatActivity() {
 
         var imagenJugador: Int = 0
         var imagenMaquina: Int = 0
-
+        var puntajeJugador = 0
+        var puntajeMaquina = 0
         timer.schedule(object : TimerTask() {
             override fun run() {
                 handler.post {
                     val randomJugador = Random()
                     val randomMaquina = Random()
-                    val indiceImagenJugador = randomJugador.nextInt(imagenes.size)
-                    val indiceImagenMaquina = randomMaquina.nextInt(imagenes.size)
+                    var indiceImagenJugador = randomJugador.nextInt(imagenes.size)
+                    var indiceImagenMaquina = randomMaquina.nextInt(imagenes.size)
+
+                    puntajeJugador = indiceImagenJugador
+                    puntajeMaquina = indiceImagenMaquina
 
                     imagenJugador = imagenes[indiceImagenJugador]
                     imagenMaquina = imagenes[indiceImagenMaquina]
@@ -112,19 +116,16 @@ class MainActivity : AppCompatActivity() {
 
                     binding.imagenJugador.setImageResource(imagenJugador)
                     binding.imagenMaquina.setImageResource(imagenMaquina)
+
                 }
             }
-        }, 0, 200)
+        }, 0, 500)
 
         handler.postDelayed({
             timer.cancel()
 
-            // Calcular puntaje después de mostrar las imágenes
-            val puntajeJugador = imagenes.indexOf(imagenJugador) + 1
-            val puntajeMaquina = imagenes.indexOf(imagenMaquina) + 1
-
-            puntosJugador += puntajeJugador
-            puntosMaquina += puntajeMaquina
+            puntosJugador += puntajeJugador +1
+            puntosMaquina += puntajeMaquina +1
 
             binding.txtPuntosJugador.text = puntosJugador.toString()
             binding.txtPuntosMaquina.text = puntosMaquina.toString()
