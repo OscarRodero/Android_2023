@@ -174,6 +174,7 @@
         app:layout_constraintVertical_bias="0.136" />
 
     <RadioGroup
+        android:id="@+id/RGSO"
         android:layout_width="141dp"
         android:layout_height="149dp"
         app:layout_constraintBottom_toBottomOf="parent"
