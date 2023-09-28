@@ -177,6 +177,7 @@
         android:id="@+id/RGSO"
         android:layout_width="141dp"
         android:layout_height="149dp"
+        android:checkedButton="@id/rbMac"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.155"
@@ -188,7 +189,8 @@
             android:id="@+id/rbMac"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="MAC" />
+            android:text="MAC"
+            android:checked="true"/>
 
         <RadioButton
             android:id="@+id/rbWindows"
@@ -243,6 +245,7 @@
         android:id="@+id/SBHorasEstudio"
         android:layout_width="205dp"
         android:layout_height="39dp"
+        android:max="24"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.723"
