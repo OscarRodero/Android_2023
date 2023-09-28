@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    namespace = "com.example.encuesta"
+    namespace = "com.example.encuestasbonitas"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.example.encuesta"
-        minSdk = 24
+        applicationId = "com.example.encuestasbonitas"
+        minSdk = 27
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -27,8 +27,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
