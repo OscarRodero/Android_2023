@@ -27,6 +27,7 @@ class MiAdaptadorRecycler (var personajes : ArrayList<Personaje>, var  context: 
 
     companion object {
         var seleccionado:Int = -1
+    }
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = personajes.get(position)
         holder.bind(item, context, position, this)
@@ -110,14 +111,8 @@ class MiAdaptadorRecycler (var personajes : ArrayList<Personaje>, var  context: 
 
                 Toast.makeText(context, "Valor seleccionado " +  MiAdaptadorRecycler.seleccionado.toString(), Toast.LENGTH_SHORT).show()
 
-            }
-
-            itemView.setOnLongClickListener(View.OnLongClickListener {
-                Log.e("Fernando","Seleccionado con long click: ${Almacen.personajes.get(pos).toString()}")
-                Almacen.personajes.removeAt(pos)
-                miAdaptadorRecycler.notifyDataSetChanged()
-                true //Tenemos que devolver un valor boolean.
             })
         }
     }
+}
 }
