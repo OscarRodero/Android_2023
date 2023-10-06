@@ -9,7 +9,7 @@ object Conexion {
     var nombreBD = "administracion.db3"
 
     fun cambiarBD(nombreBD:String){
-        this.nombreBD = nombreBD
+        Conexion.nombreBD = nombreBD
     }
 
     fun addPersona(contexto: AppCompatActivity, u: Usuario){
@@ -42,8 +42,8 @@ object Conexion {
         return cant
     }
 
-    fun buscarPersona(contexto: AppCompatActivity, ID:String):Usuario? {
-        var u:Usuario? = null
+    fun buscarPersona(contexto: AppCompatActivity, ID:String): Usuario? {
+        var u: Usuario? = null
         val admin = AdminSQLIteConexion(contexto, nombreBD, null, 1)
         val bd = admin.writableDatabase
         val fila = bd.rawQuery(
@@ -64,7 +64,7 @@ object Conexion {
         val bd = admin.writableDatabase
         val fila = bd.rawQuery("select ID,nombre,edad from usuarios", null)
         while (fila.moveToNext()) {
-            var u:Usuario = Usuario(fila.getString(0),fila.getString(1),fila.getInt(2))
+            var u: Usuario = Usuario(fila.getString(0),fila.getString(1),fila.getInt(2))
             usuarios
         }
         bd.close()
