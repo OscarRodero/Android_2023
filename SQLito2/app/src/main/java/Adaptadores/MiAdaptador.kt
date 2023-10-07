@@ -48,6 +48,7 @@ class MiAdaptador(var usuarios:ArrayList<Usuario>, var context: Context):Recycle
             //Configura el click sobre el cardview
             itemView.setOnClickListener{
                 val intent = Intent(context, MainActivity2::class.java)
+                intent.putExtra("usuario", item)
                 context.startActivity(intent)
             }
 

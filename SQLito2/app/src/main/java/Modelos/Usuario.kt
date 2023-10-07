@@ -1,3 +1,5 @@
 package Modelos
 
-data class Usuario(var Nombre:String, var Edad:Int)
+import java.io.Serializable
+
+data class Usuario(var Nombre:String, var Edad:Int):Serializable
