@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.androidktor.databinding.ActivityMainBinding
 import okhttp3.Call
 import okhttp3.Response
-import okhttp3.ResponseBody
 import javax.security.auth.callback.Callback
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var miRecycleView: RecyclerView
+    var listaPokemon:MutableList<Pokemon> = MutableList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,27 +33,30 @@ class MainActivity : AppCompatActivity() {
         miRecycleView.adapter = miAdaptador
 
         binding.btnBuscar.setOnClickListener() {
+
         }
     }
 
-    private fun obtenerTodosLosPokemons(): ArrayList<Pokemon> {
-        val lista = ArrayList<Pokemon>()
+    fun obtenerTodosLosPokemons(): MutableList<Pokemon> {
         val request = ServiceBuilder.buildService(UserAPI::class.java)
-        val call = request.getPokemons()
-        call.enqueue(object: Callback<ArrayList<Pokemon>>{
-            override fun onResponse(call: Call<ArrayList<Pokemon>>, response: Response<ArrayList<Pokemon>>){
+        val call  = request.getPokemons()
+        call.enqueue(object: Callback<MutableList<Pokemon>>{
+            override fun onResponse(call: Call<MutableList<Pokemon>>, response: Response<MutableList<Pokemon>>){
                 Log.e("oscar", response.code().toString())
-                for(post in response.body()!!){
-                    lista.add(Pokemon(post.id, post.nombre, post.tipo))
+                for (post in response.body()!!){
+                    listaPokemon.add(Pokemon(post.id, post.name, post.type))
                 }
                 if(response.isSuccessful){
-
+                    miRecycleView.apply{
+                        setHasFixedSize(true)
+                        layoutManager = LinearLayoutManager(this@MainActivity)
+                        adapter = MiAdaptador(listaPokemon,this@MainActivity)
+                    }
                 }
             }
             override fun onFailure(call: Call<MutableList<Pokemon>>, t:Throwable){
                 Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
-        return lista
     }
 }

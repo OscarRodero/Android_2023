@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidktor.R
 
-class MiAdaptador(var pokemons:ArrayList<Pokemon>, var context: Context):RecyclerView.Adapter<MiAdaptador.ViewHolder>() {
+class MiAdaptador(var pokemons:MutableList<Pokemon>, var context: Context):RecyclerView.Adapter<MiAdaptador.ViewHolder>() {
     companion object {
         //Variable que guarda el último objeto seleccionado (-1 si no hay seleccionados)
         var seleccionado:Int = -1
