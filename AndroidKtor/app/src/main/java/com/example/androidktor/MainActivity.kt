@@ -6,19 +6,18 @@ import Adaptadores.MiAdaptador
 import Modelo.Pokemon
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidktor.databinding.ActivityMainBinding
-import okhttp3.Call
-import okhttp3.Response
-import javax.security.auth.callback.Callback
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var miRecycleView: RecyclerView
-    var listaPokemon:MutableList<Pokemon> = MutableList()
+    var listaPokemon: MutableList<Pokemon> = mutableListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +41,6 @@ class MainActivity : AppCompatActivity() {
         val call  = request.getPokemons()
         call.enqueue(object: Callback<MutableList<Pokemon>>{
             override fun onResponse(call: Call<MutableList<Pokemon>>, response: Response<MutableList<Pokemon>>){
-                Log.e("oscar", response.code().toString())
                 for (post in response.body()!!){
                     listaPokemon.add(Pokemon(post.id, post.name, post.type))
                 }
@@ -58,5 +56,6 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+        return listaPokemon
     }
 }
