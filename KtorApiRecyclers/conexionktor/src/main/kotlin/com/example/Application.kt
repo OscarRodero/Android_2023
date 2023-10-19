@@ -4,9 +4,9 @@ import com.example.plugins.*
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
-
+import Models.Constants
 fun main() {
-    embeddedServer(Netty, port = 8080, host = "0.0.0.0", module = Application::module)
+    embeddedServer(Netty, port = Constants.port, host = Constants.ip, module = Application::module)
         .start(wait = true)
 }
 
