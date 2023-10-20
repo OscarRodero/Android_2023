@@ -5,7 +5,7 @@ object StaticConnection {
     var conexion: Connection? = null
     var sentenciaSQL: Statement? = null
     var registros: ResultSet? = null
-    fun abrirConexion(): Int {
+    fun openConnection(): Int {
         var cod = 0
         try {
             val controlador = "com.mysql.cj.jdbc.Driver"
@@ -22,7 +22,7 @@ object StaticConnection {
     }
 
     // ------------------------------------------------------
-    fun cerrarConexion(): Int {
+    fun closeConnection(): Int {
         var cod = 0
         try {
             conexion!!.close()
@@ -36,7 +36,7 @@ object StaticConnection {
     fun obtenerTodosLosUsuarios():ArrayList<User>{
         val users = arrayListOf<User>()
         try{
-            var res:Int= abrirConexion()
+            var res:Int= openConnection()
             println(res)
             registros = sentenciaSQL!!.executeQuery("select * from users")
             while(registros!!.next()){
@@ -50,10 +50,35 @@ object StaticConnection {
                     )
                 )
             }
-            cerrarConexion()
+            closeConnection()
         }catch(ex: Exception){
             println(ex.message)
         }
         return users
+    }
+
+    fun login(username:String): User {
+        var res:Int = openConnection()
+        val users = arrayListOf<User>()
+        registros = sentenciaSQL!!.executeQuery("select * from users")
+        while(registros!!.next()){
+            users.add(
+                User(
+                    registros!!.getInt(1),
+                    registros!!.getString(2),
+                    registros!!.getString(3),
+                    registros!!.getString(4),
+                    registros!!.getBoolean(5)
+                )
+            )
+        }
+        var usuario = users.find { it.Username == username }
+        if(usuario == null){
+            usuario = users.find{it.Email == username}
+            if (usuario == null){
+
+            }
+        }
+        closeConnection()
     }
 }

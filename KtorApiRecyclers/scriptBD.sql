@@ -5,7 +5,7 @@ USE Android;
 -- Creación de la tabla de Users
 CREATE TABLE Users (
     Id INT PRIMARY KEY,
-    Username VARCHAR(50) NOT NULL,
+    Username VARCHAR(50) UNIQUE NOT NULL,
     Email VARCHAR(100) UNIQUE NOT NULL,
     Password VARCHAR(255) NOT NULL,
     IsAdmin BOOLEAN
