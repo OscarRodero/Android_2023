@@ -32,4 +32,28 @@ object StaticConnection {
         }
         return cod
     }
+
+    fun obtenerTodosLosUsuarios():ArrayList<User>{
+        val users = arrayListOf<User>()
+        try{
+            var res:Int= abrirConexion()
+            println(res)
+            registros = sentenciaSQL!!.executeQuery("select * from users")
+            while(registros!!.next()){
+                users.add(
+                    User(
+                        registros!!.getInt(1),
+                        registros!!.getString(2),
+                        registros!!.getString(3),
+                        registros!!.getString(4),
+                        registros!!.getBoolean(5)
+                    )
+                )
+            }
+            cerrarConexion()
+        }catch(ex: Exception){
+            println(ex.message)
+        }
+        return users
+    }
 }

@@ -20,3 +20,5 @@ CREATE TABLE Games (
 -- Creamos un usuario admin y un usuario normal
 INSERT INTO Users (Id, Username, Email, Password, IsAdmin) VALUES (0, 'admin', 'admin@admin.com', 'admin', true);
 INSERT INTO Users (Id, Username, Email, Password, IsAdmin) VALUES (1, 'default', 'default@default.com', 'default', false);
+-- Insertar una nueva partida para el usuario "default"
+INSERT INTO Games (Id, UserId, Result) VALUES (0, 1, '3-1');
