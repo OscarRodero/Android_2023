@@ -1,6 +1,7 @@
 package Models
 
 import java.sql.*
+
 object StaticConnection {
     var conexion: Connection? = null
     var sentenciaSQL: Statement? = null
@@ -52,12 +53,42 @@ object StaticConnection {
             }
             closeConnection()
         }catch(ex: Exception){
+            print(ex)
         }
         return users
     }
 
-    fun login(usu: User): User? {
-        return usu
+    fun login(usu: AuxUser): User? {
+        val users = mutableListOf<User>()
+        var miUsu: User? = null
+        try {
+            openConnection()
+            val query = "SELECT * FROM users WHERE Email = ? AND Password = ?"
+            val preparedStatement: PreparedStatement = conexion!!.prepareStatement(query)
+            preparedStatement.setString(1, usu.Email)
+            preparedStatement.setString(2, usu.Password)
+            val registros = preparedStatement.executeQuery()
+            while (registros.next()) {
+                users.add(
+                    User(
+                        registros.getInt(1),
+                        registros.getString(2),
+                        registros.getString(3),
+                        registros.getString(4),
+                        registros.getBoolean(5)
+                    )
+                )
+            }
+            if (users.isNotEmpty()) {
+                miUsu = users[0] // Tomar el primer usuario encontrado
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        } finally {
+            closeConnection()
+        }
+        return miUsu
     }
+
 
 }

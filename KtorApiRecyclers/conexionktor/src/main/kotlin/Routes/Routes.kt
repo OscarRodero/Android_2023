@@ -20,11 +20,13 @@ fun Route.dbRouting(){
     }
     route("/login"){
         post(){
-            var usu = call.receive<User>()
-            var log = StaticConnection.login(usu)
-            if(log==null){
-                call.response.status(HttpStatusCode.NotFound)
-                return@post call.respond("Error >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            val user = call.receive<AuxUser>()
+            val log = StaticConnection.login(user)
+            if (log == null) {
+                call.respondText("Error: La autenticación falló", status = HttpStatusCode.NotFound)
+            } else {
+                // Aquí puedes responder con un token de acceso u otra confirmación
+                call.respond(log)
             }
         }
     }
