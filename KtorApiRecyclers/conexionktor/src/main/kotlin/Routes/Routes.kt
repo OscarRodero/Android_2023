@@ -25,6 +25,9 @@ fun Route.dbRouting(){
             if(log==null){
                 call.response.status(HttpStatusCode.NotFound)
                 return@post call.respond("Error >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            }else{
+                call.response.status(HttpStatusCode.OK)
+                call.respond(log)
             }
         }
     }

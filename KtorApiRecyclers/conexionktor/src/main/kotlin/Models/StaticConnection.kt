@@ -57,7 +57,30 @@ object StaticConnection {
     }
 
     fun login(usu: User): User? {
-        return usu
+        var user: User? = null
+        try {
+            openConnection()
+            val query = "SELECT * FROM users WHERE username = ? OR email = ?"
+            val preparedStatement = conexion!!.prepareStatement(query)
+            preparedStatement.setString(1, usu.Username)
+            preparedStatement.setString(2, usu.Email)
+            registros = preparedStatement.executeQuery()
+
+            if (registros!!.next()) {
+                user = User(
+                    registros!!.getInt(1),
+                    registros!!.getString(2),
+                    registros!!.getString(3),
+                    registros!!.getString(4),
+                    registros!!.getBoolean(5)
+                )
+            }
+            closeConnection()
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        }
+        return user
     }
+
 
 }
