@@ -33,7 +33,7 @@ object StaticConnection {
         return cod
     }
 
-    fun obtenerTodosLosUsuarios():ArrayList<User>{
+    fun obtainAllUsers():ArrayList<User>{
         val users = arrayListOf<User>()
         try{
             var res:Int= openConnection()
@@ -52,33 +52,12 @@ object StaticConnection {
             }
             closeConnection()
         }catch(ex: Exception){
-            println(ex.message)
         }
         return users
     }
 
-    fun login(username:String): User {
-        var res:Int = openConnection()
-        val users = arrayListOf<User>()
-        registros = sentenciaSQL!!.executeQuery("select * from users")
-        while(registros!!.next()){
-            users.add(
-                User(
-                    registros!!.getInt(1),
-                    registros!!.getString(2),
-                    registros!!.getString(3),
-                    registros!!.getString(4),
-                    registros!!.getBoolean(5)
-                )
-            )
-        }
-        var usuario = users.find { it.Username == username }
-        if(usuario == null){
-            usuario = users.find{it.Email == username}
-            if (usuario == null){
-
-            }
-        }
-        closeConnection()
+    fun login(usu: User): User? {
+        return usu
     }
+
 }

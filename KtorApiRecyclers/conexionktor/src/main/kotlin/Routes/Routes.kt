@@ -10,7 +10,7 @@ import io.ktor.server.routing.*
 fun Route.dbRouting(){
     route("/users"){
         get {
-            var users = StaticConnection.obtenerTodosLosUsuarios()
+            var users = StaticConnection.obtainAllUsers()
             if(users.isNotEmpty()) {
                 call.respond(users)
             }else{
@@ -19,9 +19,13 @@ fun Route.dbRouting(){
         }
     }
     route("/login"){
-        get("{username}"){
-            var CorrectLogin = StaticConnection.login()
-            if(CorrectLogin)
+        post(){
+            var usu = call.receive<User>()
+            var log = StaticConnection.login(usu)
+            if(log==null){
+                call.response.status(HttpStatusCode.NotFound)
+                return@post call.respond("Error >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            }
         }
     }
 }

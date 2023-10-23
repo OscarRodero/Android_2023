@@ -2,7 +2,7 @@ package Models
 
 object Constants
 {
-    val ip = "192.168.209.52"
+    val ip = "192.168.2.250"
     val port = 8080
 
     val servidor = "localhost"
@@ -11,4 +11,6 @@ object Constants
     val bbdd = "android"
     val dbUser = "root"
     val dbPwd = ""
+
+    val UserTable = "users"
 }
