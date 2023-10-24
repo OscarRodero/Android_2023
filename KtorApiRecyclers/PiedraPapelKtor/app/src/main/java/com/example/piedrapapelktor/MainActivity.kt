@@ -25,25 +25,25 @@ class MainActivity : AppCompatActivity() {
                 var usuAux = AuxUser(binding.etxtCorreo.text.toString(), binding.etxtPassword.text.toString())
                 val request = ServiceBuilder.buildService(UserAPI::class.java)
                 val call = request.login(usuAux)
-
                 call.enqueue(object: Callback<User>{
                     override fun onResponse(call: Call<User>, response: Response<User>) {
-                        val post = response.body()
-                        Toast.makeText(this@MainActivity,post.toString(),Toast.LENGTH_SHORT).show()
-                        /*
-                        if(post != null){
-                            if(binding.chkAdmin.isChecked){
-                                val intent = Intent(this@MainActivity, VistaAdmin::class.java)
-                                intent.putExtra("usuario", post)
-                                startActivity(intent)
-                            }else{
-                                val intent = Intent(this@MainActivity, VistaUser::class.java)
-                                intent.putExtra("usuario", post)
-                                startActivity(intent)
+                        var res = response.body()
+                        if(response.isSuccessful){
+                            if (res != null) {
+                                if(binding.chkAdmin.isChecked && res.IsAdmin==true){
+                                    var intent = Intent(this@MainActivity, VistaAdmin::class.java)
+                                    intent.putExtra("usuario", res)
+                                    startActivity(intent)
+                                }else{
+                                    var intent = Intent(this@MainActivity, VistaUser::class.java)
+                                    intent.putExtra("usuario", res)
+                                    startActivity(intent)
+                                }
                             }
+
                         }
 
-                         */
+
                     }
                     override fun onFailure(call: Call<User>, t: Throwable) {
                         Toast.makeText(this@MainActivity,"Fallo al realizar la conexión",Toast.LENGTH_SHORT).show()

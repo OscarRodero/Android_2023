@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ServiceBuilder {
     private val cliente = OkHttpClient.Builder().build()
     private val retrofit = Retrofit.Builder()
-        .baseUrl("https://pokeapi.co/api/v2")
+        .baseUrl("http://192.168.2.250:8080")
         .addConverterFactory(GsonConverterFactory.create())
         .client(cliente)
         .build()
