@@ -1,9 +1,7 @@
 package com.example.piedrapapelktor
 
-import API.ServiceBuilder
-import API.UserAPI
-import Modelos.AuxUser
-import Modelos.User
+import API.*
+import Modelos.*
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -31,17 +29,22 @@ class MainActivity : AppCompatActivity() {
                 call.enqueue(object: Callback<User>{
                     override fun onResponse(call: Call<User>, response: Response<User>) {
                         val post = response.body()
+                        Toast.makeText(this@MainActivity,post.toString(),Toast.LENGTH_SHORT).show()
+                        /*
                         if(post != null){
                             if(binding.chkAdmin.isChecked){
                                 val intent = Intent(this@MainActivity, VistaAdmin::class.java)
+                                intent.putExtra("usuario", post)
                                 startActivity(intent)
                             }else{
                                 val intent = Intent(this@MainActivity, VistaUser::class.java)
+                                intent.putExtra("usuario", post)
                                 startActivity(intent)
                             }
                         }
-                    }
 
+                         */
+                    }
                     override fun onFailure(call: Call<User>, t: Throwable) {
                         Toast.makeText(this@MainActivity,"Fallo al realizar la conexión",Toast.LENGTH_SHORT).show()
                     }
