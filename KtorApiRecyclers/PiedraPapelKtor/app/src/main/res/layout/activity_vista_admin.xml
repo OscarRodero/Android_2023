@@ -7,6 +7,7 @@
     tools:context=".VistaAdmin">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMiRecycle"
         android:layout_width="335dp"
         android:layout_height="526dp"
         app:layout_constraintBottom_toBottomOf="parent"

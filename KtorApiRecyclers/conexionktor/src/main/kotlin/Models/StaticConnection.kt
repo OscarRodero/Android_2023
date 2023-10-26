@@ -43,7 +43,6 @@ object StaticConnection {
             while(registros!!.next()){
                 users.add(
                     User(
-                        registros!!.getInt(1),
                         registros!!.getString(2),
                         registros!!.getString(3),
                         registros!!.getString(4),
@@ -71,7 +70,56 @@ object StaticConnection {
             while (registros.next()) {
                 users.add(
                     User(
-                        registros.getInt(1),
+                        registros.getString(2),
+                        registros.getString(3),
+                        registros.getString(4),
+                        registros.getBoolean(5)
+                    )
+                )
+            }
+            if (users.isNotEmpty()) {
+                miUsu = users[0] // Tomar el primer usuario encontrado
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        } finally {
+            closeConnection()
+        }
+        return miUsu
+    }
+
+    fun deleteUser(user: User): Int {
+        var registrosBorrados = 0
+
+        try {
+            openConnection()
+            val query = "DELETE FROM users WHERE Email = ?"
+            val preparedStatement: PreparedStatement = conexion!!.prepareStatement(query)
+            preparedStatement.setString(1, user.Email)
+            registrosBorrados = preparedStatement.executeUpdate()
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+        } finally {
+            closeConnection()
+        }
+        return registrosBorrados
+    }
+
+    fun register(usu:User): User? {
+        val users = mutableListOf<User>()
+        var miUsu: User? = null
+        try {
+            openConnection()
+            val query = "INSERT INTO Users (Username, Email, Password, IsAdmin) VALUES (?, ?, ?,?);"
+            val preparedStatement: PreparedStatement = conexion!!.prepareStatement(query)
+            preparedStatement.setString(1, usu.Username)
+            preparedStatement.setString(2, usu.Email)
+            preparedStatement.setString(3, usu.Password)
+            preparedStatement.setBoolean(4, usu.IsAdmin)
+            val registros = preparedStatement.executeQuery()
+            while (registros.next()) {
+                users.add(
+                    User(
                         registros.getString(2),
                         registros.getString(3),
                         registros.getString(4),

@@ -17,6 +17,24 @@ fun Route.dbRouting(){
                 call.respondText("No hay usuarios",status = HttpStatusCode.OK)
             }
         }
+        post {
+            val user = call.receive<User>()
+            var registros = StaticConnection.register(user)
+            if(user!=null) {
+                call.respond(user)
+            }else{
+                call.respondText("No se pudo registrar el usuario",status = HttpStatusCode.OK)
+            }
+        }
+        delete {
+            val user = call.receive<User>()
+            val log = StaticConnection.deleteUser(user)
+            if(log>0){
+                call.respond(log)
+            }else{
+                call.respondText("Ningún usuario eliminado", status = HttpStatusCode.NotFound)
+            }
+        }
     }
     route("/login"){
         post(){

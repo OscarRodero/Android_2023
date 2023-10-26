@@ -16,6 +16,12 @@
         android:theme="@style/Theme.PiedraPapelKtor"
         tools:targetApi="31">
         <activity
+            android:name=".AddUser"
+            android:exported="false" />
+        <activity
+            android:name=".DetallesUsuario"
+            android:exported="false" />
+        <activity
             android:name=".VistaUser"
             android:exported="false" />
         <activity

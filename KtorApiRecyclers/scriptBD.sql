@@ -4,7 +4,7 @@ CREATE DATABASE Android;
 USE Android;
 -- Creación de la tabla de Users
 CREATE TABLE Users (
-    Id INT PRIMARY KEY,
+    Id INT AUTO_INCREMENT PRIMARY KEY,
     Username VARCHAR(50) UNIQUE NOT NULL,
     Email VARCHAR(100) UNIQUE NOT NULL,
     Password VARCHAR(255) NOT NULL,
@@ -12,13 +12,13 @@ CREATE TABLE Users (
 );
 -- Creación de la tabla de Games
 CREATE TABLE Games (
-    Id INT PRIMARY KEY,
+    Id INT PRIMARY KEY AUTO_INCREMENT,
     UserId INT NOT NULL,
     Result VARCHAR(20) NOT NULL,
     FOREIGN KEY (UserId) REFERENCES Users(Id)
 );
 -- Creamos un usuario admin y un usuario normal
-INSERT INTO Users (Id, Username, Email, Password, IsAdmin) VALUES (0, 'admin', 'admin@admin.com', 'admin', true);
-INSERT INTO Users (Id, Username, Email, Password, IsAdmin) VALUES (1, 'default', 'default@default.com', 'default', false);
+INSERT INTO Users (Username, Email, Password, IsAdmin) VALUES ('admin', 'admin@admin.com', 'admin', true);
+INSERT INTO Users (Username, Email, Password, IsAdmin) VALUES ('default', 'default@default.com', 'default', false);
 -- Insertar una nueva partida para el usuario "default"
-INSERT INTO Games (Id, UserId, Result) VALUES (0, 1, '3-1');
+INSERT INTO Games (UserId, Result) VALUES (2, '3-1');
