@@ -1,6 +1,7 @@
 package com.example.miejemplofirebase
 
 import android.app.Activity
+import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +10,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import com.example.miejemplofirebase.databinding.ActivityMainBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -63,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         //------------------ Login Google -------------------
         //------------------------------- -Autenticación Google --------------------------------------------------
         firebaseauth.signOut()
+
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.your_web_client_id))
             .requestEmail()
@@ -122,13 +125,6 @@ class MainActivity : AppCompatActivity() {
         launcherVentanaGoogle.launch(signInClient)
         //milauncherVentanaGoogle.launch(signInClient)
     }
-
-    }
-
-
-
-
-
     //************************************** Funciones auxiliares **************************************
     //*********************************************************************************
     private fun showAlert(msg:String = "Se ha producido un error autenticando al usuario"){

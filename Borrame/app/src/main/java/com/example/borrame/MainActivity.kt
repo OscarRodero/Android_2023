@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         showAlert()
                     }
+                }.addOnFailureListener{
+                    Toast.makeText(this, "Fallo en la conexión al registrar al usuario.",Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -53,6 +55,8 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         showAlert()
                     }
+                }.addOnFailureListener{
+                    Toast.makeText(this, "Fallo en la conexión al hacer el login",Toast.LENGTH_SHORT).show()
                 }
             }
             else {
@@ -60,8 +64,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        //------------------ Login Google -------------------
-        //------------------------------- -Autenticación Google --------------------------------------------------
+        //******************************* Para el login con Google ******************************
+        //------------------------------- -Autenticación Google ---------------------------------------
+
         firebaseauth.signOut()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.your_web_client_id))
@@ -73,9 +78,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-
-    //******************************* Para el login con Google ******************************
     private lateinit var googleSignInClient: GoogleSignInClient
 
     private val launcherVentanaGoogle =  registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ result ->
@@ -115,16 +117,16 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    //--------
+
     private fun signInGoogle(){
         val signInClient = googleSignInClient.signInIntent
         Log.e(TAG,"Llego aquí 1")
         launcherVentanaGoogle.launch(signInClient)
         //milauncherVentanaGoogle.launch(signInClient)
     }
+    //******************************* Fin login Google ********************************
 
-
-    //************************************** Funciones auxiliares **************************************
+    //***************************** Funciones auxiliares ******************************
     //*********************************************************************************
     private fun showAlert(msg:String = "Se ha producido un error autenticando al usuario"){
         val builder = AlertDialog.Builder(this)
