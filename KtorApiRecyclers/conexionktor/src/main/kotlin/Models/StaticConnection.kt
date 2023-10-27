@@ -105,30 +105,22 @@ object StaticConnection {
         return registrosBorrados
     }
 
-    fun register(usu:User): User? {
-        val users = mutableListOf<User>()
+    fun register(usu: User): User? {
         var miUsu: User? = null
         try {
             openConnection()
-            val query = "INSERT INTO Users (Username, Email, Password, IsAdmin) VALUES (?, ?, ?,?);"
+            val query = "INSERT INTO Users (Username, Email, Password, IsAdmin) VALUES (?, ?, ?, ?);"
             val preparedStatement: PreparedStatement = conexion!!.prepareStatement(query)
             preparedStatement.setString(1, usu.Username)
             preparedStatement.setString(2, usu.Email)
             preparedStatement.setString(3, usu.Password)
             preparedStatement.setBoolean(4, usu.IsAdmin)
-            val registros = preparedStatement.executeQuery()
-            while (registros.next()) {
-                users.add(
-                    User(
-                        registros.getString(2),
-                        registros.getString(3),
-                        registros.getString(4),
-                        registros.getBoolean(5)
-                    )
-                )
-            }
-            if (users.isNotEmpty()) {
-                miUsu = users[0] // Tomar el primer usuario encontrado
+
+            val registros = preparedStatement.executeUpdate() // Ejecutar la inserción
+
+            if (registros > 0) {
+                // La inserción tuvo éxito, por lo que devolvemos el usuario que se acaba de insertar
+                miUsu = usu
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -137,6 +129,7 @@ object StaticConnection {
         }
         return miUsu
     }
+
 
 
 }

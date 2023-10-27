@@ -12,6 +12,11 @@ import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.piedrapapelktor.databinding.ActivityVistaAdminBinding
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,12 +32,21 @@ class VistaAdmin : AppCompatActivity() {
         val intent = intent
         usuario = intent.getSerializableExtra("usuario") as User
 
-        miRecycleView = binding.rvMiRecycle as RecyclerView
-        miRecycleView.setHasFixedSize(true)
-        miRecycleView.layoutManager = LinearLayoutManager(this)
-        var usus = obtenerUsuarios()
-        var miAdaptador = MiAdaptador(usus, this)
-        miRecycleView.adapter = miAdaptador
+        /*
+        val job = GlobalScope.launch(Dispatchers.IO) {
+            Log.e("oscar", "Corroutina lanzada")
+            val ususDeferred = async { obtenerUsuarios() }
+            miRecycleView = binding.rvMiRecycle
+            miRecycleView.setHasFixedSize(true)
+            miRecycleView.layoutManager = LinearLayoutManager(this@VistaAdmin)
+            val usus = ususDeferred.await()
+            withContext(Dispatchers.Main) {
+                val miAdaptador = MiAdaptador(usus, this@VistaAdmin)
+                miRecycleView.adapter = miAdaptador
+            }
+        }
+        */
+
 
 
         binding.btnAddUsers.setOnClickListener(){
@@ -42,7 +56,7 @@ class VistaAdmin : AppCompatActivity() {
 
     }
 
-    private fun obtenerUsuarios(): ArrayList<User> {
+    private suspend fun obtenerUsuarios(): ArrayList<User> {
         val usuarios = ArrayList<User>()
         val request = ServiceBuilder.buildService(UserAPI::class.java)
         val call = request.obtenerUsuarios()

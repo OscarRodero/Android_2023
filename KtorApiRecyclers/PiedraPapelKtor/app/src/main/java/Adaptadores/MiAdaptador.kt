@@ -15,11 +15,12 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.piedrapapelktor.DetallesUsuario
 import com.example.piedrapapelktor.R
+import kotlinx.coroutines.Deferred
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MiAdaptador(var usuarios:ArrayList<User>, var context: Context):RecyclerView.Adapter<MiAdaptador.ViewHolder>() {
+class MiAdaptador(var usuarios: ArrayList<User>, var context: Context):RecyclerView.Adapter<MiAdaptador.ViewHolder>() {
     companion object {
         //Variable que guarda el último objeto seleccionado (-1 si no hay seleccionados)
         var seleccionado:Int = -1

@@ -20,7 +20,7 @@ class AddUser : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.btnGuardarNuevoUsu.setOnClickListener(){
-            if(binding.etxtNuevoNombre.text.equals("") || binding.etxtNuevoCorreo.text.equals("") || binding.etxtNuevaContra.text.equals("")){
+            if(binding.etxtNuevoNombre.text.isEmpty()|| binding.etxtNuevoCorreo.text.isEmpty() || binding.etxtNuevaContra.text.isEmpty()){
                 Toast.makeText(this, "Es necesario rellenar todos los campos", Toast.LENGTH_SHORT).show()
             }else{
                 var valor:Boolean = false
@@ -34,16 +34,21 @@ class AddUser : AppCompatActivity() {
                     override fun onResponse(call: Call<User>, response: Response<User>) {
                         var res = response.body()
                         if (response.isSuccessful) {
-
+                            if(res !=null){
+                                Toast.makeText(this@AddUser, res.toString(),Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
-
                     override fun onFailure(call: Call<User>, t: Throwable) {
                         Toast.makeText(this@AddUser,"Fallo al realizar la conexión",Toast.LENGTH_SHORT).show()
                     }
                 })
             }
 
+        }
+
+        binding.btnCancelarNuevoUsu.setOnClickListener{
+            finish()
         }
     }
 }
