@@ -17,12 +17,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnEnviar.setOnClickListener{
             var encuesta = hashMapOf(
-                "nombre" to binding.etxtEnviar.text
+                "nombre" to binding.etxtEnviar.text.toString()
             )
-            db.collection("Encuestas").add(encuesta.get("nombre").toString()).addOnSuccessListener {
-                Toast.makeText(this@MainActivity, "Bien",Toast.LENGTH_LONG).show()
+            db.collection("Encuestas").document(encuesta.get("nombre").toString()).set(encuesta).addOnSuccessListener {
+                Toast.makeText(this, "Bien",Toast.LENGTH_LONG).show()
             }.addOnFailureListener{
-                Toast.makeText(this@MainActivity, "Mal",Toast.LENGTH_LONG).show()
+                Toast.makeText(this, "Mal",Toast.LENGTH_LONG).show()
             }
         }
     }
