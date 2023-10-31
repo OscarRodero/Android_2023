@@ -1,5 +1,7 @@
-package Models
+package Connection
 
+import Models.AuxUser
+import Models.User
 import java.sql.*
 
 object StaticConnection {
