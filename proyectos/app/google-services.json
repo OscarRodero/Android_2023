@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "302171866743",
+    "project_id": "encuestafirestore-c0130",
+    "storage_bucket": "encuestafirestore-c0130.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302171866743:android:01c96084e10bbe4f3be872",
+        "android_client_info": {
+          "package_name": "com.example.encuestafirestore"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeOuH5JDbp_ePF3OtsgdL-HDISzejyexk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
