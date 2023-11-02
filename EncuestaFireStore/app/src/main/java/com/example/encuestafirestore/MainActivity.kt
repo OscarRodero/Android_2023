@@ -15,15 +15,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnEnviar.setOnClickListener{
-            var encuesta = hashMapOf(
-                "nombre" to binding.etxtEnviar.text.toString()
-            )
-            db.collection("Encuestas").document(encuesta.get("nombre").toString()).set(encuesta).addOnSuccessListener {
-                Toast.makeText(this, "Bien",Toast.LENGTH_LONG).show()
-            }.addOnFailureListener{
-                Toast.makeText(this, "Mal",Toast.LENGTH_LONG).show()
-            }
+        binding.btnLogin.setOnClickListener{
+
         }
     }
 }
