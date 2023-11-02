@@ -12,7 +12,20 @@
           "package_name": "com.example.encuestafirestore"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "302171866743-a0p7bnt6mb6l2d0jlde4nui4uem568dg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.encuestafirestore",
+            "certificate_hash": "248f8af783a00b3b23a6c218af5af23df82bc8ba"
+          }
+        },
+        {
+          "client_id": "302171866743-0crqd5buqfoj1pdqtsarncllc5lmq1td.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBeOuH5JDbp_ePF3OtsgdL-HDISzejyexk"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302171866743-0crqd5buqfoj1pdqtsarncllc5lmq1td.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
