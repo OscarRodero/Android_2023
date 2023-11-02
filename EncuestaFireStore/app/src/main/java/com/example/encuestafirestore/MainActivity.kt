@@ -18,5 +18,13 @@ class MainActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener{
 
         }
+
+        binding.btnRegistro.setOnClickListener {
+
+        }
+
+        binding.btnLoginConGoogle.setOnClickListener {
+
+        }
     }
 }
