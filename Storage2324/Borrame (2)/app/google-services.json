@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "668828865814",
+    "project_id": "borrame-e7191",
+    "storage_bucket": "borrame-e7191.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:668828865814:android:e8e43fc1f49cabb4166c37",
+        "android_client_info": {
+          "package_name": "com.example.borrame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "668828865814-80bkrh38s3n9kk5csbo1d89njbgd4nio.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.borrame",
+            "certificate_hash": "ce10602b3cbfe6fcfb75508aff8632cb2863560f"
+          }
+        },
+        {
+          "client_id": "668828865814-ko8tr0j9tjhbpdfndqkis2ruuv7g58re.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBoB-l_1_mtpxE7MWbjeaJVyPHDl9ZbORw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "668828865814-ko8tr0j9tjhbpdfndqkis2ruuv7g58re.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
