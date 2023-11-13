@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
                                     Log.e("oscar", document.toString())
                                 }
                             }
-                            //Con este método el hilo principal de onCreate se espera a que la función acabe y devuelva la colección con los datos.
                             trabajo.join() //Esperamos a que el método acabe: https://dzone.com/articles/waiting-for-coroutines
                         }
                         Log.e("oscar", usu.toString())
@@ -74,7 +73,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.btnRegistro.setOnClickListener {
+            if(binding.etxtCorreo.text.isNotEmpty() && binding.etxtContraseA.text.isNotEmpty()){
 
+
+            }
         }
 
         binding.btnLoginConGoogle.setOnClickListener {
