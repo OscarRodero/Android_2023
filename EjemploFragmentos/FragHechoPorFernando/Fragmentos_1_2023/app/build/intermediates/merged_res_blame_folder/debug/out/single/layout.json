@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/home/faranzabe/.gradle/daemon/8.0/com.example.fragmentos_1_2023.app-mergeDebugResources-30:/layout/fragment_fragmento_a.xml",
+        "source": "/home/faranzabe/.gradle/daemon/8.0/com.example.fragmentos_1_2023.app-main-33:/layout/fragment_fragmento_a.xml"
+    },
+    {
+        "merged": "/home/faranzabe/.gradle/daemon/8.0/com.example.fragmentos_1_2023.app-mergeDebugResources-30:/layout/activity_main.xml",
+        "source": "/home/faranzabe/.gradle/daemon/8.0/com.example.fragmentos_1_2023.app-main-33:/layout/activity_main.xml"
+    },
+    {
+        "merged": "/home/faranzabe/.gradle/daemon/8.0/com.example.fragmentos_1_2023.app-mergeDebugResources-30:/layout/fragment_fragmento_b.xml",
+        "source": "/home/faranzabe/.gradle/daemon/8.0/com.example.fragmentos_1_2023.app-main-33:/layout/fragment_fragmento_b.xml"
+    },
+    {
+        "merged": "com.example.fragmentos_1_2023.app-mergeDebugResources-30:/layout/fragment_fragmento_a.xml",
+        "source": "com.example.fragmentos_1_2023.app-main-33:/layout/fragment_fragmento_a.xml"
+    }
+]
