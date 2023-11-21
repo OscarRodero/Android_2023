@@ -1,0 +1,5 @@
+package Modelos
+
+import java.io.Serializable
+
+data class Chatarra(var type:String, var description:String):Serializable
