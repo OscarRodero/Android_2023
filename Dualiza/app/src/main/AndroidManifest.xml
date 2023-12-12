@@ -2,7 +2,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -14,8 +23,33 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dualiza"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.example.dualiza.geo.API_KEY"
+            android:value="AIzaSyBFWqhf5FLtzAbNI8XxTZ2NdTrrAdZsI4Q"/>
         <activity
-            android:name=".EmpresaActivity"
+            android:name=".SeleccionUbicacion"
+            android:exported="false" />
+        <activity
+            android:name=".Empresa"
+            android:exported="false" />
+        <activity
+            android:name=".CrearLote"
+            android:exported="false" />
+        <activity
+            android:name=".Diseniadores"
+            android:exported="false" />
+        <activity
+            android:name=".Clasificadores"
+            android:exported="false" />
+        <activity
+            android:name=".Administradores"
+            android:exported="false" />
+        <activity
+            android:name=".ElegirEntrada"
+            android:exported="false" />
+        <activity
+            android:name=".RegistroNuevoUsuario"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
