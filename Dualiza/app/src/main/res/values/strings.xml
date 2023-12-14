@@ -1,4 +1,25 @@
 <resources>
     <string name="app_name">Dualiza</string>
+    <string name="correo">Correo</string>
+    <string name="contra">Contraseña</string>
+    <string name="iniciar_sesion">Iniciar Sesión</string>
+    <string name="iniciar_sesion_google">Iniciar sesión con google</string>
+    <string name="registro">¿No tienes cuenta? Registrate aquí.</string>
+    <string name="des_obj">Descripción del Objeto</string>
+    <string name="cantidad">Cantidad</string>
+    <string name="agregar">Agregar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="continuar">Continuar</string>
+    <string name="modo">Modo Oscuro</string>
+    <string name="mantener_sesion">Mantener sesión iniciada</string>
+    <string name="guardar_cambios">Guardar Cambios</string>
+    <string name="nombre_compa">Nombre de la compañia</string>
+    <string name="correo_e">Correo Electrónico</string>
+    <string name="aceptar">Aceptar</string>
+    <string name="longitud">Longitud:</string>
+    <string name="latitud">Latitud:</string>
+    <string name="Seleccionar">Seleccionar</string>
+    <string name="nueva_entrega">Nueva Entrega</string>
+    <string name="opciones">Opciones</string>
     <string name="your_web_client_id">230276506636-4e3l61oi1k6ur66jiqqog9b9ld0de1pu.apps.googleusercontent.com</string>
 </resources>

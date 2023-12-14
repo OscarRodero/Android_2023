@@ -18,7 +18,10 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.PointOfInterest
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.location.LocationManager
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.MarkerOptions
 
 
@@ -28,8 +31,7 @@ class SeleccionUbicacion : AppCompatActivity(), OnMapReadyCallback, GoogleMap.On
 
     private lateinit var mapView: MapView
     private lateinit var map: GoogleMap
-
-    var alMarcadores = ArrayList<Marker>()
+    var marcadorSeleccionado: Marker? = null
 
     companion object {
         const val REQUEST_CODE_LOCATION = 0
@@ -43,12 +45,20 @@ class SeleccionUbicacion : AppCompatActivity(), OnMapReadyCallback, GoogleMap.On
         mapView.getMapAsync(this)
 
         binding.btnSeleccionarPosicion.setOnClickListener(){
-            val resultadoIntent = Intent()
-            resultadoIntent.putExtra("Latitud", binding.etxtLatitud.text)
-            resultadoIntent.putExtra("Longitud", binding.etxtLongitud.text)
-            setResult(Activity.RESULT_OK, resultadoIntent)
-            finish()
+            if(marcadorSeleccionado == null){
+                Toast.makeText(this, "Selecciona una ubicación manteniendo pulsado sobre el mapa", Toast.LENGTH_LONG).show()
+            } else {
+                val latitud = marcadorSeleccionado!!.position.latitude
+                val longitud = marcadorSeleccionado!!.position.longitude
+                val resultadoIntent = Intent()
+                resultadoIntent.putExtra("Latitud", latitud)
+                resultadoIntent.putExtra("Longitud", longitud)
+                setResult(Activity.RESULT_OK, resultadoIntent)
+                finish()
+            }
         }
+
+
     }
 
     override fun onResume() {
@@ -74,6 +84,7 @@ class SeleccionUbicacion : AppCompatActivity(), OnMapReadyCallback, GoogleMap.On
         map = googleMap
 
         map.mapType = GoogleMap.MAP_TYPE_HYBRID
+        map.uiSettings.isMyLocationButtonEnabled = true
         map.setOnMyLocationButtonClickListener(this)
         map.setOnMyLocationClickListener(this)
         map.setOnMapLongClickListener(this)
@@ -100,7 +111,8 @@ class SeleccionUbicacion : AppCompatActivity(), OnMapReadyCallback, GoogleMap.On
         }
     }
     override fun onMyLocationButtonClick(): Boolean {
-        TODO("Not yet implemented")
+        irubicacioActual()
+        return true
     }
 
     override fun onMyLocationClick(p0: Location) {
@@ -112,18 +124,31 @@ class SeleccionUbicacion : AppCompatActivity(), OnMapReadyCallback, GoogleMap.On
     }
 
     override fun onMapLongClick(p0: LatLng) {
-        var marcador = map.addMarker(MarkerOptions().position(p0!!).title("Ubicación"))
-        if(alMarcadores.isEmpty()){
-            alMarcadores.add(marcador!!)
-        }else{
-            alMarcadores.removeFirst()
-            alMarcadores.add(marcador!!)
-        }
-        binding.etxtLatitud.setText(p0!!.latitude.toString())
-        binding.etxtLongitud.setText(p0!!.longitude.toString())
+        // Elimina el marcador anterior
+        marcadorSeleccionado?.remove()
+
+        // Añade un nuevo marcador
+        marcadorSeleccionado = map.addMarker(MarkerOptions().position(p0).title("Ubicación"))
+
+        // Actualiza las coordenadas en los EditText si es necesario
+        binding.etxtLatitud.setText(p0.latitude.toString())
+        binding.etxtLongitud.setText(p0.longitude.toString())
     }
 
     override fun onMarkerClick(p0: Marker): Boolean {
         TODO("Not yet implemented")
     }
+
+    @SuppressLint("MissingPermission")
+    private fun irubicacioActual() {
+        val locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val miUbicacion = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        if (miUbicacion != null) {
+            val latLng = LatLng(miUbicacion.latitude, miUbicacion.longitude)
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 18f))
+        } else {
+            Toast.makeText(this, "No se pudo obtener la ubicación actual", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }

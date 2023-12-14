@@ -1,5 +1,9 @@
 package com.example.dualiza
 
+import Adaptadores.MiAdaptador
+import Modelos.Almacen
+import Modelos.Chatarra
+import Modelos.Lote
 import Modelos.ProviderType
 import android.Manifest
 import android.content.DialogInterface
@@ -11,15 +15,24 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.dualiza.databinding.ActivityEmpresaBinding
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
 
 class Empresa: AppCompatActivity() {
@@ -30,7 +43,8 @@ class Empresa: AppCompatActivity() {
     private val db = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
     private val storageRef = storage.reference
-
+    lateinit var miRVEmpresa: RecyclerView
+    private lateinit var miAdaptador: MiAdaptador
     //------------------------- Funciones de callback para activities results -------------------------
     // Activity para lanzar la cámara.
     private val openCamera =
@@ -108,6 +122,14 @@ class Empresa: AppCompatActivity() {
         val contraseña = intent.getStringExtra("contraseña")
         val proveedor = intent.getStringExtra("proveedor")
 
+//        Recycleview
+        miAdaptador = MiAdaptador(ArrayList(), this)
+        binding.rvEmpresa.apply {
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(this@Empresa)
+            adapter = miAdaptador
+        }
+
         binding.etxtNombreDeEmpresa.setText(nombre)
         Log.e("oscar", "Proveedor en empresa: "+proveedor.toString())
 
@@ -124,14 +146,41 @@ class Empresa: AppCompatActivity() {
             mostrarDialogoSeleccionImagen()
         }
 
-        binding.btnRealizarNuevaEntrega.setOnClickListener() {
-            val intent = Intent(this, CrearLote::class.java)
-            intent.putExtra("email", email)
-            intent.putExtra("proveedor", proveedor)
-            intent.putExtra("nombre", nombre)
-            intent.putExtra("contraseña", contraseña)
-            startActivity(intent)
+        // Después de inicializar la RecyclerView y el adaptador
+        cargarLotesDesdeFirestore(nombre, miAdaptador)
+    }
+
+    private fun realizarNuevaEntrega() {
+        val email = intent.getStringExtra("email")
+        val proveedor = intent.getStringExtra("proveedor")
+        val nombre = intent.getStringExtra("nombre")
+        val contraseña = intent.getStringExtra("contraseña")
+
+        val intent = Intent(this, CrearLote::class.java)
+        intent.putExtra("email", email)
+        intent.putExtra("proveedor", proveedor)
+        intent.putExtra("nombre", nombre)
+        intent.putExtra("contraseña", contraseña)
+        startActivity(intent)
+    }
+
+    //Menú de puntos
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_empresa, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.mnop1 ->{
+                realizarNuevaEntrega()
+            }
+            R.id.mnop2 ->{
+                val intent = Intent(this, MenuOpciones::class.java)
+                startActivity(intent)
+            }
         }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun cargarImagenDesdeFirebase() {
@@ -148,6 +197,55 @@ class Empresa: AppCompatActivity() {
             }
         }
     }
+
+    private fun cargarLotesDesdeFirestore(empresaNombre: String?, miAdaptador: MiAdaptador) {
+        if (empresaNombre != null) {
+            GlobalScope.launch(Dispatchers.Main) {
+                try {
+                    val result = withContext(Dispatchers.IO) {
+                        // Consulta Firestore para obtener los lotes relacionados con la empresa
+                        db.collection("Lotes")
+                            .whereEqualTo("empresaEntregante", empresaNombre)
+                            .get()
+                            .await()
+                    }
+
+                    Almacen.entregas.clear() // Limpiar la lista actual antes de agregar nuevos lotes
+
+                    for (document in result) {
+                        val empresaEntregante = document.getString("empresaEntregante") ?: ""
+                        val estado = document.getBoolean("estado") ?: false
+                        val latitud = document.getDouble("latitud") ?: 0.0
+                        val longitud = document.getDouble("longitud") ?: 0.0
+
+                        // Obtener la lista de objetos entregados y convertirla a ArrayList<Chatarra>
+                        val objetosEntregadosList = document.get("objetosEntregados") as ArrayList<HashMap<String, Any>>?
+                        val objetosEntregados = ArrayList<Chatarra>()
+                        objetosEntregadosList?.let {
+                            for (objetoMap in it) {
+                                val type = objetoMap["type"] as String
+                                val description = objetoMap["description"] as String
+                                val quantity = objetoMap["quantity"] as Long // Nota: En Firestore, los números enteros son Long
+
+                                val chatarra = Chatarra(type, description, quantity.toInt())
+                                objetosEntregados.add(chatarra)
+                            }
+                        }
+
+                        val lote = Lote(empresaEntregante, objetosEntregados, estado, latitud, longitud)
+                        Almacen.entregas.add(lote)
+                    }
+
+                    // Notificar al adaptador que los datos han cambiado
+                    miAdaptador.notifyDataSetChanged()
+                } catch (exception: Exception) {
+                    Log.e("oscar", "Error al obtener los lotes desde Firestore: ${exception.message}")
+                    // Manejar el error, mostrar un mensaje al usuario, etc.
+                }
+            }
+        }
+    }
+
 
     private fun mostrarDialogoSeleccionImagen() {
         val opciones = arrayOf("Cámara", "Galería")

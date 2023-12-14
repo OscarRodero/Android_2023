@@ -31,6 +31,17 @@ class MainActivity : AppCompatActivity() {
         //Genero una instancia de FireBaseAuth para hacer el login clásico
         firebaseauth = FirebaseAuth.getInstance()
 
+        val usuarioActual = Auxiliar.Conexion.obtenerUsuarioActual()
+        val configuracion = usuarioActual?.let { Auxiliar.Conexion.obtenerConfiguracion(this, it) }
+        Log.e("oscar", configuracion.toString())
+        if (configuracion?.sesion == true) {
+            // Si la configuración indica que la sesión debe recordarse, ir directamente a la actividad de la empresa
+            val intent = Intent(this, Empresa::class.java)
+            startActivity(intent)
+            finish()
+            return
+        }
+
         //Login clásico
         binding.btnLoginClasico.setOnClickListener {
             if(binding.etxtCorreo.text.isNotEmpty() && binding.etxtContraseA.text.isNotEmpty()){
