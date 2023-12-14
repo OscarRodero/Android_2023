@@ -4,14 +4,17 @@ import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import com.example.dualiza.databinding.ActivityEmpresaBinding
+import com.google.android.gms.auth.api.identity.Identity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -35,6 +38,7 @@ class Empresa: AppCompatActivity() {
                 val data = result.data!!
                 this.bitmap = data.extras!!.get("data") as Bitmap
                 binding.btnLogoEmpresa.setImageBitmap(bitmap)
+                subirFoto(this.bitmap)
             }
         }
 
@@ -49,31 +53,67 @@ class Empresa: AppCompatActivity() {
             }
         }
 
+    //Activity para lanzar la galería de imágenes.
+    val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            Log.d("oscar", "Selected URI: $uri")
+            this.uriImagen = uri
+            var bit = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+            binding.btnLogoEmpresa.setImageURI(uri)
+            subirFoto(bit)
+        } else {
+            Log.d("oscar", "No media selected")
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityEmpresaBinding.inflate(layoutInflater)
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
+        //Cargo la imagen de perfil
+        cargarImagenDesdeFirebase()
 
         // Obtenemos los datos
         val email = intent.getStringExtra("email")
-        val provider = intent.getStringExtra("provider")
         val nombre = intent.getStringExtra("nombre")
         val contraseña = intent.getStringExtra("contraseña")
+        val proveedor = intent.getStringExtra("proveedor")
+
+        Log.e("oscar", "Proveedor en empresa: "+proveedor.toString())
+        //Declaración de la toolbar
+        binding.miToolbar.title = "DUALIZA"
+        setSupportActionBar(binding.miToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.miToolbar.setNavigationOnClickListener {
+            logOut(proveedor, firebaseAuth)
+        }
 
         binding.btnLogoEmpresa.setOnClickListener() {
             mostrarDialogoSeleccionImagen()
-            subirFoto()
         }
 
         binding.btnRealizarNuevaEntrega.setOnClickListener() {
             val intent = Intent(this, CrearLote::class.java)
             intent.putExtra("email", email)
-            intent.putExtra("provider", provider)
+            intent.putExtra("proveedor", proveedor)
             intent.putExtra("nombre", nombre)
             intent.putExtra("contraseña", contraseña)
             startActivity(intent)
+        }
+    }
 
+    private fun cargarImagenDesdeFirebase() {
+        val email = firebaseAuth.currentUser?.email
+        if (email != null) {
+            val imageRef = storageRef.child("imagenes/$email/logo.jpg")
+            // Descargar la imagen desde Firebase Storage
+            imageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener { bytes ->
+                // Decodificar bytes en Bitmap y establecer en el ImageView
+                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                binding.btnLogoEmpresa.setImageBitmap(bitmap)
+            }.addOnFailureListener {
+                Log.e("oscar", "Error al cargar la imagen desde Firebase Storage: ${it.message}")
+            }
         }
     }
 
@@ -88,9 +128,7 @@ class Empresa: AppCompatActivity() {
                         requestCameraPermissionLauncher.launch(Manifest.permission.CAMERA)
                     }
                     1 -> {
-                        val intent =
-                            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                        startActivityForResult(intent, 1)
+                        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                     }
                 }
             }
@@ -98,21 +136,12 @@ class Empresa: AppCompatActivity() {
         builder.create().show()
     }
 
-    // Para abrir la galería.
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null) {
-            val selectedImage: Uri? = data.data
-            binding.btnLogoEmpresa.setImageURI(selectedImage)
-            // Llamar a la función para subir la foto a Firestore
-            subirFoto()
-        }
-    }
-
     // Función para subir la foto a Firestore
-    private fun subirFoto() {
+    private fun subirFoto(bitmap: Bitmap) {
+        Log.i("oscar", "Entro en subirFoto()")
         val email = firebaseAuth.currentUser?.email
         if (email != null) {
+            Log.i("oscar", "Entro en el if")
             val imageRef = storageRef.child("imagenes/$email/logo.jpg")
 
             // Convertir la imagen a bytes
@@ -126,7 +155,7 @@ class Empresa: AppCompatActivity() {
                 // La imagen se ha subido correctamente, ahora actualizamos Firestore
                 actualizarFirestoreConImagen(email)
             }.addOnFailureListener {
-                Log.e("Fernando", "Error al subir la imagen al almacenamiento de Firebase: ${it.message}")
+                Log.e("oscar", "Error al subir la imagen al almacenamiento de Firebase: ${it.message}")
             }
         }
     }
@@ -142,5 +171,17 @@ class Empresa: AppCompatActivity() {
             .addOnFailureListener {
                 Log.e("Fernando", "Error al actualizar el campo de imagen en Firestore: ${it.message}")
             }
+    }
+
+    private fun logOut(proveedor: String?, firebaseAuth: FirebaseAuth) {
+        if (proveedor == ProviderType.GOOGLE.name){
+            firebaseAuth.signOut()
+            val signInClient = Identity.getSignInClient(this@Empresa)
+            signInClient.signOut()
+            finish()
+        }else{
+            firebaseAuth.signOut()
+            finish()
+        }
     }
 }

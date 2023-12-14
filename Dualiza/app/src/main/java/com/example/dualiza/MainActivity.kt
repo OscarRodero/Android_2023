@@ -144,6 +144,7 @@ class MainActivity : AppCompatActivity() {
             }
     }
     private fun irHome(email: String, provider: ProviderType, nombre: String, contraseña: String, permisos: List<Long>) {
+        Log.e("oscar", provider.toString())
         if (permisos.size > 1) {
             val alertDialogBuilder = AlertDialog.Builder(this)
             alertDialogBuilder.setTitle("¿Cómo deseas acceder?")
@@ -185,11 +186,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun abrirVentana(email: String, provider: ProviderType, nombre: String, contrasenia: String, claseVentana: Class<*>) {
-        Log.e("oscar", "Llego a meterme en abrir ventana")
+        Log.e("oscar", provider.name)
         try{
             val intent = Intent(this, claseVentana).apply {
                 putExtra("email", email)
-                putExtra("provider", provider.name)
+                putExtra("proveedor", provider.name)
                 putExtra("nombre", nombre)
                 putExtra("contraseña", contrasenia)
             }
