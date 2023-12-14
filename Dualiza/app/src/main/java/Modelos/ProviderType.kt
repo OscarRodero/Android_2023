@@ -1,4 +1,4 @@
-package com.example.dualiza
+package Modelos
 
 enum class ProviderType {
     BASIC,
