@@ -36,9 +36,12 @@ class Empresa: AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == RESULT_OK) {
                 val data = result.data!!
-                this.bitmap = data.extras!!.get("data") as Bitmap
-                binding.btnLogoEmpresa.setImageBitmap(bitmap)
-                subirFoto(this.bitmap)
+                val bitmap = data.extras!!.get("data") as Bitmap
+                val nuevoAncho = 200
+                val nuevoAlto = 200
+                val bitmapAjustado = ajustarTamañoImagen(bitmap, nuevoAncho, nuevoAlto)
+                binding.btnLogoEmpresa.setImageBitmap(bitmapAjustado)
+                subirFoto(bitmapAjustado)
             }
         }
 
@@ -57,12 +60,37 @@ class Empresa: AppCompatActivity() {
     val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
             Log.d("oscar", "Selected URI: $uri")
-            this.uriImagen = uri
-            var bit = MediaStore.Images.Media.getBitmap(contentResolver, uri)
-            binding.btnLogoEmpresa.setImageURI(uri)
-            subirFoto(bit)
+            val bit = MediaStore.Images.Media.getBitmap(contentResolver, uri)
+            val nuevoAncho = 200
+            val nuevoAlto = 200
+            val bitmapAjustado = ajustarTamañoImagen(bit, nuevoAncho, nuevoAlto)
+            binding.btnLogoEmpresa.setImageBitmap(bitmapAjustado)
+            subirFoto(bitmapAjustado)
         } else {
             Log.d("oscar", "No media selected")
+        }
+    }
+    // Función para subir la foto a Firestore
+    private fun subirFoto(bitmap: Bitmap) {
+        Log.i("oscar", "Entro en subirFoto()")
+        val email = firebaseAuth.currentUser?.email
+        if (email != null) {
+            Log.i("oscar", "Entro en el if")
+            val imageRef = storageRef.child("imagenes/$email/logo.jpg")
+
+            // Convertir la imagen a bytes
+            val baos = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val data = baos.toByteArray()
+
+            // Subir la imagen al almacenamiento de Firebase
+            val uploadTask = imageRef.putBytes(data)
+            uploadTask.addOnSuccessListener {
+                // La imagen se ha subido correctamente, ahora actualizamos Firestore
+                actualizarFirestoreConImagen(email)
+            }.addOnFailureListener {
+                Log.e("oscar", "Error al subir la imagen al almacenamiento de Firebase: ${it.message}")
+            }
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,12 +107,15 @@ class Empresa: AppCompatActivity() {
         val contraseña = intent.getStringExtra("contraseña")
         val proveedor = intent.getStringExtra("proveedor")
 
+        binding.etxtNombreDeEmpresa.setText(nombre)
         Log.e("oscar", "Proveedor en empresa: "+proveedor.toString())
+
         //Declaración de la toolbarCrearLote
-        binding.miToolbar.title = "DUALIZA"
-        setSupportActionBar(binding.miToolbar)
+        binding.empresaToolbar.title = "DUALIZA"
+        setSupportActionBar(binding.empresaToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        binding.miToolbar.setNavigationOnClickListener {
+
+        binding.empresaToolbar.setNavigationOnClickListener {
             logOut(proveedor, firebaseAuth)
         }
 
@@ -136,30 +167,6 @@ class Empresa: AppCompatActivity() {
         builder.create().show()
     }
 
-    // Función para subir la foto a Firestore
-    private fun subirFoto(bitmap: Bitmap) {
-        Log.i("oscar", "Entro en subirFoto()")
-        val email = firebaseAuth.currentUser?.email
-        if (email != null) {
-            Log.i("oscar", "Entro en el if")
-            val imageRef = storageRef.child("imagenes/$email/logo.jpg")
-
-            // Convertir la imagen a bytes
-            val baos = ByteArrayOutputStream()
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-            val data = baos.toByteArray()
-
-            // Subir la imagen al almacenamiento de Firebase
-            val uploadTask = imageRef.putBytes(data)
-            uploadTask.addOnSuccessListener {
-                // La imagen se ha subido correctamente, ahora actualizamos Firestore
-                actualizarFirestoreConImagen(email)
-            }.addOnFailureListener {
-                Log.e("oscar", "Error al subir la imagen al almacenamiento de Firebase: ${it.message}")
-            }
-        }
-    }
-
     // Actualizar el campo de imagen en Firestore
     private fun actualizarFirestoreConImagen(email: String) {
         db.collection("Users")
@@ -183,5 +190,9 @@ class Empresa: AppCompatActivity() {
             firebaseAuth.signOut()
             finish()
         }
+    }
+
+    private fun ajustarTamañoImagen(bitmapOriginal: Bitmap, nuevoAncho: Int, nuevoAlto: Int): Bitmap {
+        return Bitmap.createScaledBitmap(bitmapOriginal, nuevoAncho, nuevoAlto, false)
     }
 }

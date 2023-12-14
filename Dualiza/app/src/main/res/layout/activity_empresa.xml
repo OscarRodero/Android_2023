@@ -55,7 +55,7 @@
         app:layout_constraintVertical_bias="0.589" />
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/miToolbar"
+        android:id="@+id/empresaToolbar"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
