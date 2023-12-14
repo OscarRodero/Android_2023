@@ -80,7 +80,7 @@ class Empresa: AppCompatActivity() {
         val proveedor = intent.getStringExtra("proveedor")
 
         Log.e("oscar", "Proveedor en empresa: "+proveedor.toString())
-        //Declaración de la toolbar
+        //Declaración de la toolbarCrearLote
         binding.miToolbar.title = "DUALIZA"
         setSupportActionBar(binding.miToolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

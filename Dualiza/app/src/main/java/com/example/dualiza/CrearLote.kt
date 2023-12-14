@@ -15,6 +15,14 @@ class CrearLote : AppCompatActivity() {
         binding = ActivityCrearLoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //Declaración de la toolbarCrearLote
+        binding.crearLoteToolbar.title = "DUALIZA"
+        setSupportActionBar(binding.crearLoteToolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        binding.crearLoteToolbar.setNavigationOnClickListener {
+            finish()
+        }
+
         binding.btnAgregar.setOnClickListener(){
             if(binding.etxtNombreObjeto.text.toString().isNotEmpty() && binding.etxtCantidad.text.toString().toInt()>0){
                 var resumen = binding.etxtResumen.text.toString()
@@ -33,7 +41,7 @@ class CrearLote : AppCompatActivity() {
             finish()
         }
         binding.btnContinuar.setOnClickListener(){
-            if(binding.etxtResumen.text.isNotEmpty()){
+            if(!binding.etxtResumen.text.equals("")){
                 val intent = Intent(this, SeleccionUbicacion::class.java)
                 startActivityForResult(intent, 0)
             }

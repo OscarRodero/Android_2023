@@ -23,10 +23,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Dualiza"
         tools:targetApi="31">
-
         <meta-data
-            android:name="com.example.dualiza.geo.API_KEY"
-            android:value="AIzaSyBFWqhf5FLtzAbNI8XxTZ2NdTrrAdZsI4Q"/>
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBFWqhf5FLtzAbNI8XxTZ2NdTrrAdZsI4Q" />
         <activity
             android:name=".SeleccionUbicacion"
             android:exported="false" />
@@ -44,9 +43,6 @@
             android:exported="false" />
         <activity
             android:name=".Administradores"
-            android:exported="false" />
-        <activity
-            android:name=".ElegirEntrada"
             android:exported="false" />
         <activity
             android:name=".RegistroNuevoUsuario"
