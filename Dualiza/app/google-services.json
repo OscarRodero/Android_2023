@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "230276506636",
+    "project_id": "dualiza",
+    "storage_bucket": "dualiza.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230276506636:android:8b530b8f31f4ec6b4c7a29",
+        "android_client_info": {
+          "package_name": "com.example.dualiza"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230276506636-1tsl8l3p3gt59g6r8j4uhr1a1k2gk5og.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dualiza",
+            "certificate_hash": "637e3c2c6648490d6fe14245c87de0867e6b6570"
+          }
+        },
+        {
+          "client_id": "230276506636-4e3l61oi1k6ur66jiqqog9b9ld0de1pu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCjFz1Ne6Lmxb0FEWesptEQpLxGdVkMoq8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230276506636-4e3l61oi1k6ur66jiqqog9b9ld0de1pu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

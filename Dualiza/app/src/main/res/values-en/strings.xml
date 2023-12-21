@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dualize</string>
+    <string name="correo">Mail</string>
+    <string name="contra">Password</string>
+    <string name="iniciar_sesion">Log in</string>
+    <string name="iniciar_sesion_google">Sign in with google</string>
+    <string name="registro">You do not have an account? Sign up here.</string>
+    <string name="des_obj">Object Description</string>
+    <string name="cantidad">Amount</string>
+    <string name="agregar">Add</string>
+    <string name="cancelar">Cancel</string>
+    <string name="continuar">Continue</string>
+    <string name="modo">Dark Mode</string>
+    <string name="mantener_sesion">Keep me logged in</string>
+    <string name="guardar_cambios">Save Changes</string>
+    <string name="nombre_compa">Name of the company</string>
+    <string name="correo_e">Email</string>
+    <string name="aceptar">Accept</string>
+    <string name="longitud">Length:</string>
+    <string name="latitud">Latitude:</string>
+    <string name="Seleccionar">Select</string>
+    <string name="nueva_entrega">New Delivery</string>
+    <string name="opciones">Options</string>
+    <string name="your_web_client_id">230276506636-4e3l61oi1k6ur66jiqqog9b9ld0de1pu.apps.googleusercontent.com</string>
+</resources>

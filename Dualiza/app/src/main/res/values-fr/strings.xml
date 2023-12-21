@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Dualiser</string>
+    <string name="correo">Mail</string>
+    <string name="contra">Mot de passe</string>
+    <string name="iniciar_sesion">Commencer la session</string>
+    <string name="iniciar_sesion_google">Connectez-vous avec Google</string>
+    <string name="registro">Vous n\'avez pas de compte ? Inscrivez-vous ici.</string>
+    <string name="des_obj">Description de l\'objet</string>
+    <string name="cantidad">Montant</string>
+    <string name="agregar">Ajouter</string>
+    <string name="cancelar">Annuler</string>
+    <string name="continuar">continuer</string>
+    <string name="modo">Mode sombre</string>
+    <string name="mantener_sesion">Rester connecté</string>
+    <string name="guardar_cambios">Enregistrer les modifications</string>
+    <string name="nombre_compa">Nom de l\'entreprise</string>
+    <string name="correo_e">Courrier électronique</string>
+    <string name="aceptar">Accepter</string>
+    <string name="longitud">Longueur:</string>
+    <string name="latitud">Latitude:</string>
+    <string name="Seleccionar">Sélectionner</string>
+    <string name="nueva_entrega">Nouvelle livraison</string>
+    <string name="opciones">Possibilités</string>
+    <string name="your_web_client_id">230276506636-4e3l61oi1k6ur66jiqqog9b9ld0de1pu.apps.googleusercontent.com</string>
+</resources>

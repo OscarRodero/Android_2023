@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">PiedraPapelKtor</string>
+    <string name="email">Correo Electrónico</string>
+    <string name="contrasenia">Contraseña</string>
+    <string name="login">Acceder</string>
+    <string name="salir">Salir</string>
+</resources>
