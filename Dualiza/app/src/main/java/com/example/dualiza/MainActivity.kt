@@ -165,7 +165,7 @@ class MainActivity : AppCompatActivity() {
                     1L -> alertDialogBuilder.setPositiveButton("Administrador") { _, _ ->
                         abrirVentana(email, provider, nombre, contraseña, Administradores::class.java)
                     }
-                    2L -> alertDialogBuilder.setNegativeButton("Clasificador") { _, _ ->
+                    2L -> alertDialogBuilder.setNeutralButton("Clasificador") { _, _ ->
                         abrirVentana(email, provider, nombre, contraseña, Clasificadores::class.java)
                     }
                     3L -> alertDialogBuilder.setNeutralButton("Diseñador") { _, _ ->

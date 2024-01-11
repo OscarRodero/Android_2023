@@ -1,0 +1,14 @@
+type Profesor @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Nombre: String
+  Cargo: String
+  Personas: [Persona] @hasMany(indexName: "byProfesor", fields: ["id"])
+}
+
+type Persona @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  Nombre: String
+  Edad: Int
+  Parte: Boolean
+  profesorID: ID! @index(name: "byProfesor")
+}
